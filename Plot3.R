@@ -1,0 +1,10 @@
+Sys.setlocale("LC_TIME","English")
+data <- read.table("household_power_consumption.txt",header=TRUE,sep=";",na.strings="?",comment.char="",colClasses=c("character","character",rep("numeric",7)))
+data2 <- data[data$Date=="1/2/2007" | data$Date=="2/2/2007",]
+data2$DateTime <- strptime(paste(data2$Date,data2$Time),"%d/%m/%Y %H:%M:%S")
+png("plot3.png",480,480)
+with(data2,plot(DateTime,Sub_metering_1,type="l",xlab="",ylab="Energy sub metering"))
+with(data2,lines(DateTime,Sub_metering_2,type="l",col="red"))
+with(data2,lines(DateTime,Sub_metering_3,type="l",col="blue"))
+legend("topright",c("Sub_metering_1","Sub_metering_2","Sub_metering_3"),lty=1,col=c("black","red","blue"))
+dev.off()
